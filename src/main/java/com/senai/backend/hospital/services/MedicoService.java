@@ -19,7 +19,7 @@ public class MedicoService {
         return medicoRepository.save(medico);
     }
 
-    public Medico recuperarPorId(Long id) {
+    public Medico recuperarPorId(Integer id) {
         return medicoRepository.findById(id).orElse(null);
     }
 
@@ -27,23 +27,20 @@ public class MedicoService {
         return medicoRepository.findAll();
     }
 
-    public Medico atualizar(Long id, Medico medico) {
+    public Medico atualizar(Integer id, Medico medico) {
         Optional<Medico> medOpt = medicoRepository.findById(id);
-
         if (medOpt.isPresent()) {
             Medico med = medOpt.get();
-            medico.setId(med.getId()); // mantém ID
+            medico.setId(med.getId());
             return medicoRepository.save(medico);
         }
         return null;
     }
 
-    public boolean desativar(Long id) {
+    public boolean removerPorId(Integer id) {
         Medico med = medicoRepository.findById(id).orElse(null);
-
         if (med != null) {
-            med.setStatus(false); // delete lógico
-            medicoRepository.save(med);
+            medicoRepository.deleteById(id);
             return true;
         }
         return false;

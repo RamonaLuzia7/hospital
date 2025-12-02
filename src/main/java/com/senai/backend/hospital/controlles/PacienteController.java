@@ -29,7 +29,7 @@ public class PacienteController {
     }
 
     @GetMapping("/recuperar-por-id/{id}")
-    public Paciente recuperarPorId(@PathVariable Long id) {
+    public Paciente recuperarPorId(@PathVariable Integer id) {
         return pacienteService.recuperarPorId(id);
     }
 
@@ -39,12 +39,12 @@ public class PacienteController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public Paciente atualizar(@PathVariable Long id, @RequestBody Paciente paciente) {
+    public Paciente atualizar(@PathVariable Integer id, @RequestBody Paciente paciente) {
         return pacienteService.atualizar(id, paciente);
     }
 
     @DeleteMapping("/remover/{id}")
-    public boolean remover(@PathVariable Long id) {
-        return pacienteService.desativar(id);
+    public boolean remover(@PathVariable Integer id) {
+        return pacienteService.removerPorId(id);
     }
 }

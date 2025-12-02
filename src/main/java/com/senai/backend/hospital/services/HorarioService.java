@@ -19,7 +19,7 @@ public class HorarioService {
         return horarioRepository.save(horario);
     }
 
-    public Horario recuperarPorId(Long id) {
+    public Horario recuperarPorId(Integer id) {
         return horarioRepository.findById(id).orElse(null);
     }
 
@@ -27,23 +27,20 @@ public class HorarioService {
         return horarioRepository.findAll();
     }
 
-    public Horario atualizar(Long id, Horario horario) {
-        Optional<Horario> horOpt = horarioRepository.findById(id);
-
-        if (horOpt.isPresent()) {
-            Horario h = horOpt.get();
-            horario.setId(h.getId()); 
-            return horarioRepository.save(horario);
-        }
-        return null;
+    public Horario atualizar(Integer id, Horario horario) {
+    Optional<Horario> horOpt = horarioRepository.findById(id);
+    if (horOpt.isPresent()) {
+        Horario hor = horOpt.get();
+        horario.setId(hor.getId());
+        return horarioRepository.save(horario);
     }
+    return null;
+}
 
-    public boolean remover(Long id) {
-        Horario horario = horarioRepository.findById(id).orElse(null);
-
-        if (h != null) {
-            h.setStatus(false); 
-            horarioRepository.save(h);
+    public boolean removerPorId(Integer id) {
+        Horario hor = horarioRepository.findById(id).orElse(null);
+        if (hor != null) {
+            horarioRepository.deleteById(id);
             return true;
         }
         return false;

@@ -29,7 +29,7 @@ public class HorarioController {
     }
 
     @GetMapping("/recuperar-por-id/{id}")
-    public Horario recuperarPorId(@PathVariable Long id) {
+    public Horario recuperarPorId(@PathVariable Integer id) {
         return horarioService.recuperarPorId(id);
     }
 
@@ -39,12 +39,12 @@ public class HorarioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public Horario atualizar(@PathVariable Long id, @RequestBody Horario horario) {
-        return horarioService.atualizar(id, horario);
+    public Horario atualizar(@PathVariable Integer id, @RequestBody Horario horario) {
+        return horarioService.atualizar(id,  horario);
     }
 
-    @DeleteMapping("/remover/{id}")
-    public boolean remover(@PathVariable Long id) {
-        return horarioService.remover(id);
+   @DeleteMapping("/remover/{id}")
+   public boolean remover(@PathVariable Integer id) {
+    return horarioService.removerPorId(id);
     }
 }

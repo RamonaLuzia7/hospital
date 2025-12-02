@@ -28,8 +28,8 @@ public class MedicoController {
         return medicoService.cadastrar(medico);
     }
 
-    @GetMapping("/recuperar-por-id/{id}")
-    public Medico recuperarPorId(@PathVariable Long id) {
+    @GetMapping("/recuperar-por-id")
+    public Medico recuperarPorId(@PathVariable Integer id) {
         return medicoService.recuperarPorId(id);
     }
 
@@ -39,12 +39,12 @@ public class MedicoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public Medico atualizar(@PathVariable Long id, @RequestBody Medico medico) {
+    public Medico atualizar(@PathVariable Integer id, @RequestBody Medico medico) {
         return medicoService.atualizar(id, medico);
     }
 
     @DeleteMapping("/remover/{id}")
-    public boolean remover(@PathVariable Long id) {
-        return medicoService.desativar(id);
+    public boolean remover(@PathVariable Integer id) {
+        return medicoService.removerPorId(id);
     }
 }

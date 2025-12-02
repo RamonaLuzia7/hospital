@@ -29,23 +29,23 @@ public class AgendaController {
         return agendaService.cadastrar(agenda);
     }
 
-    @GetMapping("/recuperar-por-id/{id}")
-    public Agenda recuperarPorId(@PathVariable Long id) {
-        return agendaService.recuperarPorId(id);
-    }
+     @GetMapping("/recuperar-por-id/{id}")
+    public Agenda recuperarPorId(@PathVariable Integer id) {
+    return agendaService.recuperarPorId(id);
+}
 
     @GetMapping("/listar-todos")
     public List<Agenda> listarTodos() {
-        return agendaService.listarTodos();
-    }
+    return agendaService.listarTodos();
+}
 
     @PutMapping("/atualizar/{id}")
-    public Agenda atualizar(@PathVariable Long id, @RequestBody Agenda agenda) {
-        return agendaService.atualizar(id, agenda);
+    public Agenda atualizar(@PathVariable Integer id, @RequestBody Agenda agenda) {
+    return agendaService.atualizar(id, agenda);
     }
 
     @DeleteMapping("/remover/{id}")
-    public boolean remover(@PathVariable Long id) {
-        return agendaService.desativar(id);
+    public boolean remover(@PathVariable Integer id) {
+    return agendaService.removerPorId(id);
     }
 }
