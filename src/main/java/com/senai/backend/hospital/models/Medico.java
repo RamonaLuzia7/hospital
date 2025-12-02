@@ -1,5 +1,6 @@
 package com.senai.backend.hospital.models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -7,93 +8,162 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "medico")
-
+@Table
 public class Medico {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id")
-   private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-   @Column(name = "nome")
-   private String nome;
+    @Column(name = "competencia")
+    private String competencia;
 
-   @Column(name = "competencia")
-   private String competencia;
+    @Column(name = "CIM")
+    private String cim;
 
-   @Column(name = "endereco")
-   private String endereco;
+    @Column(name = "Endereço")
+    private String endereco;
 
-   @Column(name = "telefone")
-   private String telefone;
+    @Column(name = "contato")
+    private Integer contato;
+
+     @Column(name = "nome")
+    private String nome;
+
+     @Column(name = "turno")
+    private String turno; // Manhã / Tarde / Noite
+
+
+    private Integer limiteDiario = 10;
+
+    private Boolean status = true;
+
+    @Column(name = "Data_Criação")
+    private LocalDateTime dataCriacao;
+
+    @Column(name = "Data_Atualizada")
+    private LocalDateTime dataAtualizacao;
 
    @OneToMany
-   @Column(name = "id_horario")
-   private List<Horario> listaHorario;
+  @JoinColumn(name = "medico_id")
+  private List<Horario> horarios;
 
-   public Medico() {
-   }
+    
+    public Medico() {
+    }
 
-   public Medico(Integer id, String nome, String competencia, String endereco, String telefone,
-         List<Horario> listaHorario) {
-      this.id = id;
-      this.nome = nome;
-      this.competencia = competencia;
-      this.endereco = endereco;
-      this.telefone = telefone;
-      this.listaHorario = listaHorario;
-   }
 
-   public Integer getId() {
-      return id;
-   }
+    public Medico(String cim, String competencia, Integer contato, LocalDateTime dataAtualizacao, LocalDateTime dataCriacao, String endereco, List<Horario> horarios, Integer id) {
+        this.cim = cim;
+        this.competencia = competencia;
+        this.contato = contato;
+        this.dataAtualizacao = dataAtualizacao;
+        this.dataCriacao = dataCriacao;
+        this.endereco = endereco;
+        this.horarios = horarios;
+        this.id = id;
+    }
 
-   public void setId(Integer id) {
-      this.id = id;
-   }
+    public Integer getId() {
+        return id;
+    }
 
-   public String getNome() {
-      return nome;
-   }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-   public void setNome(String nome) {
-      this.nome = nome;
-   }
+    public String getCompetencia() {
+        return competencia;
+    }
 
-   public String getCompetencia() {
-      return competencia;
-   }
+    public void setCompetencia(String competencia) {
+        this.competencia = competencia;
+    }
 
-   public void setCompetencia(String competencia) {
-      this.competencia = competencia;
-   }
+    public String getCim() {
+        return cim;
+    }
 
-   public String getEndereco() {
-      return endereco;
-   }
+    public void setCim(String cim) {
+        this.cim = cim;
+    }
 
-   public void setEndereco(String endereco) {
-      this.endereco = endereco;
-   }
+    public String getEndereco() {
+        return endereco;
+    }
 
-   public String getTelefone() {
-      return telefone;
-   }
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
-   public void setTelefone(String telefone) {
-      this.telefone = telefone;
-   }
+    public Integer getContato() {
+        return contato;
+    }
 
-   public List<Horario> getListaHorario() {
-      return listaHorario;
-   }
+    public void setContato(Integer contato) {
+        this.contato = contato;
+    }
 
-   public void setListaHorario(List<Horario> listaHorario) {
-      this.listaHorario = listaHorario;
-   }
+    public Integer getLimiteDiario() {
+        return limiteDiario;
+    }
 
+    public void setLimiteDiario(Integer limiteDiario) {
+        this.limiteDiario = limiteDiario;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<Horario> horarios) {
+        this.horarios = horarios;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String turno) {
+        this.turno = turno;
+    }
+
+    
 }
