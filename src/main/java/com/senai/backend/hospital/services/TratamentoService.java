@@ -26,7 +26,6 @@ public class TratamentoService {
         return tratamentoRepository.findById(id).orElse(null);
     }
 
- 
     public List<Tratamento> listarTodos() {
         return tratamentoRepository.findAll();
     }
@@ -42,7 +41,7 @@ public class TratamentoService {
         return null;
     }
 
-  
+
     public boolean removerPorId(Integer id) {
         Tratamento tr = tratamentoRepository.findById(id).orElse(null);
         if (tr != null) {
