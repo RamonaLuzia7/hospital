@@ -57,7 +57,6 @@ public class Medico {
     public Medico() {
     }
 
-
     public Medico(String cim, String competencia, Integer contato, LocalDateTime dataAtualizacao, LocalDateTime dataCriacao, String endereco, List<Horario> horarios, Integer id) {
         this.cim = cim;
         this.competencia = competencia;
