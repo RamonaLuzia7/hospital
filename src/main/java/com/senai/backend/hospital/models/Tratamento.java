@@ -1,56 +1,70 @@
 package com.senai.backend.hospital.models;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import ch.qos.logback.core.status.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "tratamento")
-public class Tratamento {
 
+@Entity
+@Table(name="tratamento")
+public class Tratamento {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private Integer id;
 
-    @Column(name = "descricao")
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    private Status status;
+
+    @Column(name="descricao")
     private String descricao;
 
-    @Column(name = "custo")
+    @Column(name="custo")
     private Double custo;
 
-    @Column(name = "categoria")
-    private String categoria;
+    @Column(name="duracao_minutos")
+    private int duracaoMinutos;
 
-    @Column(name = "status")
-    private Boolean status = true;
+    @Column(name="data_hora_criacao")
+    private LocalDateTime dataHoraCriacao;
 
-    @Column(name = "data_criacao")
-    private LocalDateTime dataCriacao;
+    @Column(name="data_hora_atualizacao")
+    private LocalDateTime dataHoraAtualizacao;
 
-    @Column(name = "data_atualizacao")
-    private LocalDateTime dataAtualizacao;
+    @OneToMany(mappedBy="tratamento")
+    private List<Categoria> categorias;
 
-   @ManyToMany(mappedBy = "tratamentos")
-   private Set<Agenda> agendas = new HashSet<>(); 
+    @ManyToOne
+    @JoinColumn(name="agendamento_id")
+    private Agendamento agendamento;
+
     public Tratamento() {
     }
 
-    public Tratamento(String categoria, Double custo, LocalDateTime dataAtualizacao, LocalDateTime dataCriacao, String descricao, Integer id) {
-        this.categoria = categoria;
+    public Tratamento(Double custo, LocalDateTime dataHoraAtualizacao, LocalDateTime dataHoraCriacao, String descricao, int duracaoMinutos, Integer id, Status status, List<Categoria> categorias, Agendamento agendamento) {
         this.custo = custo;
-        this.dataAtualizacao = dataAtualizacao;
-        this.dataCriacao = dataCriacao;
+        this.dataHoraAtualizacao = LocalDateTime.now();
+        this.dataHoraCriacao = LocalDateTime.now();
         this.descricao = descricao;
+        this.duracaoMinutos = duracaoMinutos;
         this.id = id;
+        this.status = status;
+        this.categorias = categorias;
+        this.agendamento = agendamento;
     }
 
     public Integer getId() {
@@ -59,6 +73,14 @@ public class Tratamento {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getDescricao() {
@@ -77,46 +99,44 @@ public class Tratamento {
         this.custo = custo;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public int getDuracaoMinutos() {
+        return duracaoMinutos;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setDuracaoMinutos(int duracaoMinutos) {
+        this.duracaoMinutos = duracaoMinutos;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public LocalDateTime getDataHoraCriacao() {
+        return dataHoraCriacao;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
+        this.dataHoraCriacao = dataHoraCriacao;
     }
 
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
+    public LocalDateTime getDataHoraAtualizacao() {
+        return dataHoraAtualizacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
+    public void setDataHoraAtualizacao(LocalDateTime dataHoraAtualizacao) {
+        this.dataHoraAtualizacao = dataHoraAtualizacao;
     }
 
-    public LocalDateTime getDataAtualizacao() {
-        return dataAtualizacao;
+    public List<Categoria> getCategorias() {
+        return categorias;
     }
 
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
-        this.dataAtualizacao = dataAtualizacao;
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
-    public Set<Agenda> getAgendas() {
-        return agendas;
+    public Agendamento getAgendamento() {
+        return agendamento;
     }
 
-    public void setAgendas(Set<Agenda> agendas) {
-        this.agendas = agendas;
+    public void setAgendamento(Agendamento agendamento) {
+        this.agendamento = agendamento;
     }
-
-   
 
 }

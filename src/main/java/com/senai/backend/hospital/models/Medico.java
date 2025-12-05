@@ -8,64 +8,55 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "medico")
+@Table(name="medico")
 public class Medico {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private Integer id;
 
-    @Column(name = "competencia")
-    private String competencia;
-
-    @Column(name = "CIM")
-    private String cim;
-
-    @Column(name = "Endereço")
-    private String endereco;
-
-    @Column(name = "contato")
-    private Integer contato;
-
-     @Column(name = "nome")
+    @Column(name="nome")
     private String nome;
 
-     @Column(name = "turno")
-    private String turno; // Manhã / Tarde / Noite
+    @Column(name="especializacao")
+    private String especializacao;
 
+    @Column(name="limite_diario")
+    private int limiteDiario;
 
-    private Integer limiteDiario = 10;
+    @Column(name="status")
+    private boolean status;
 
-    private Boolean status = true;
+    @Column(name="data_hora_criacao")
+    private LocalDateTime dataHoraCriacao;
 
-    @Column(name = "Data_Criação")
-    private LocalDateTime dataCriacao;
+    @Column(name="data_hora_atualizacao")
+    private LocalDateTime dataHoraAtualizacao;
 
-    @Column(name = "Data_Atualizada")
-    private LocalDateTime dataAtualizacao;
+    @OneToMany(mappedBy="medico")
+    private List<CargaHoraria> listaCargaHoraria;
 
-   @OneToMany
-  @JoinColumn(name = "medico_id")
-  private List<Horario> horarios;
+    @OneToMany(mappedBy="medico")
+    private List<Agendamento> agendamentos;
 
-    
     public Medico() {
     }
 
-    public Medico(String cim, String competencia, Integer contato, LocalDateTime dataAtualizacao, LocalDateTime dataCriacao, String endereco, List<Horario> horarios, Integer id) {
-        this.cim = cim;
-        this.competencia = competencia;
-        this.contato = contato;
-        this.dataAtualizacao = dataAtualizacao;
-        this.dataCriacao = dataCriacao;
-        this.endereco = endereco;
-        this.horarios = horarios;
+    public Medico(LocalDateTime dataHoraAtualizacao, LocalDateTime dataHoraCriacao, String especializacao, Integer id, int limiteDiario, List<CargaHoraria> listaCargaHoraria, String nome, boolean status, List<Agendamento> agendamentos) {
+        this.dataHoraAtualizacao = LocalDateTime.now();
+        this.dataHoraCriacao = LocalDateTime.now();
+        this.especializacao = especializacao;
         this.id = id;
+        this.limiteDiario = limiteDiario;
+        this.listaCargaHoraria = listaCargaHoraria;
+        this.nome = nome;
+        this.status = true;
+        this.agendamentos = agendamentos;
     }
 
     public Integer getId() {
@@ -76,78 +67,6 @@ public class Medico {
         this.id = id;
     }
 
-    public String getCompetencia() {
-        return competencia;
-    }
-
-    public void setCompetencia(String competencia) {
-        this.competencia = competencia;
-    }
-
-    public String getCim() {
-        return cim;
-    }
-
-    public void setCim(String cim) {
-        this.cim = cim;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public Integer getContato() {
-        return contato;
-    }
-
-    public void setContato(Integer contato) {
-        this.contato = contato;
-    }
-
-    public Integer getLimiteDiario() {
-        return limiteDiario;
-    }
-
-    public void setLimiteDiario(Integer limiteDiario) {
-        this.limiteDiario = limiteDiario;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public LocalDateTime getDataAtualizacao() {
-        return dataAtualizacao;
-    }
-
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
-        this.dataAtualizacao = dataAtualizacao;
-    }
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -156,13 +75,60 @@ public class Medico {
         this.nome = nome;
     }
 
-    public String getTurno() {
-        return turno;
+    public String getEspecializacao() {
+        return especializacao;
     }
 
-    public void setTurno(String turno) {
-        this.turno = turno;
+    public void setEspecializacao(String especializacao) {
+        this.especializacao = especializacao;
     }
 
-    
+    public int getLimiteDiario() {
+        return limiteDiario;
+    }
+
+    public void setLimiteDiario(int limiteDiario) {
+        this.limiteDiario = limiteDiario;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataHoraCriacao() {
+        return dataHoraCriacao;
+    }
+
+    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
+        this.dataHoraCriacao = dataHoraCriacao;
+    }
+
+    public LocalDateTime getDataHoraAtualizacao() {
+        return dataHoraAtualizacao;
+    }
+
+    public void setDataHoraAtualizacao(LocalDateTime dataHoraAtualizacao) {
+        this.dataHoraAtualizacao = dataHoraAtualizacao;
+    }
+
+    public List<CargaHoraria> getListaCargaHoraria() {
+        return listaCargaHoraria;
+    }
+
+    public void setListaCargaHoraria(List<CargaHoraria> listaCargaHoraria) {
+        this.listaCargaHoraria = listaCargaHoraria;
+    }
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
+    }
+
+    public void setAgendamentos(List<Agendamento> agendamentos) {
+        this.agendamentos = agendamentos;
+    }
+
 }

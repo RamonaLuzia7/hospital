@@ -1,82 +1,98 @@
 package com.senai.backend.hospital.models;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 
 @Entity
 @Table(name="paciente")
 public class Paciente {
-   @Id
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   @Column(name="id")
-   private Integer id;
-   
-   @Column(name="nome")
-   private String nome;
-  
-   @Column(name="endereco")
-   private String endereco;
-   
-   @Column(name="telefone")
-   private String telefone;
-   
-   @Column(name="descricao")
-   private String descricao;
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
+    private Integer id;
 
-   public Paciente() {
-   }
+    @Column(name="nome")
+    private String nome;
 
-   public Paciente(Integer id, String nome, String endereco, String telefone, String descricao) {
-    this.id = id;
-    this.nome = nome;
-    this.endereco = endereco;
-    this.telefone = telefone;
-    this.descricao = descricao;
-   }
+    @Column(name="status")
+    private boolean status;
 
-   public Integer getId() {
-    return id;
-   }
+    @Column(name="data_hora_criacao")
+    private LocalDateTime dataHoraCriacao;
 
-   public void setId(Integer id) {
-    this.id = id;
-   }
+    @Column(name="data_hora_atualizacao")
+    private LocalDateTime dataHoraAtualizacao;
 
-   public String getNome() {
-    return nome;
-   }
+    @OneToMany(mappedBy="paciente")
+    private List<Agendamento> agendamentos;
 
-   public void setNome(String nome) {
-    this.nome = nome;
-   }
+    public Paciente() {
+    }
 
-   public String getEndereco() {
-    return endereco;
-   }
+    public Paciente(LocalDateTime dataHoraAtualizacao, LocalDateTime dataHoraCriacao, Integer id, String nome, boolean status, List<Agendamento> agendamentos) {
+        this.dataHoraAtualizacao = LocalDateTime.now();
+        this.dataHoraCriacao = LocalDateTime.now();
+        this.id = id;
+        this.nome = nome;
+        this.status = true;
+        this.agendamentos = agendamentos;
+    }
 
-   public void setEndereco(String endereco) {
-    this.endereco = endereco;
-   }
+    public Integer getId() {
+        return id;
+    }
 
-   public String getTelefone() {
-    return telefone;
-   }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-   public void setTelefone(String telefone) {
-    this.telefone = telefone;
-   }
+    public String getNome() {
+        return nome;
+    }
 
-   public String getDescricao() {
-    return descricao;
-   }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-   public void setDescricao(String descricao) {
-    this.descricao = descricao;
-   }
-   
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDataHoraCriacao() {
+        return dataHoraCriacao;
+    }
+
+    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
+        this.dataHoraCriacao = dataHoraCriacao;
+    }
+
+    public LocalDateTime getDataHoraAtualizacao() {
+        return dataHoraAtualizacao;
+    }
+
+    public void setDataHoraAtualizacao(LocalDateTime dataHoraAtualizacao) {
+        this.dataHoraAtualizacao = dataHoraAtualizacao;
+    }
+
+    public List<Agendamento> getAgendamentos() {
+        return agendamentos;
+    }
+
+    public void setAgendamentos(List<Agendamento> agendamentos) {
+        this.agendamentos = agendamentos;
+    }
+
 }

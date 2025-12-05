@@ -1,7 +1,6 @@
 package com.senai.backend.hospital.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,38 +10,48 @@ import com.senai.backend.hospital.repositories.MedicoRepository;
 
 @Service
 public class MedicoService {
-
+    
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public Medico cadastrar(Medico medico) {
+    // salvar - POST
+    public Medico salvar(Medico medico) {
         return medicoRepository.save(medico);
     }
 
-    public Medico recuperarPorId(Integer id) {
-        return medicoRepository.findById(id).orElse(null);
+    // buscar pelo id - GET
+    public Medico buscarPorId(Integer id) {
+        return medicoRepository.findById(id).get();
     }
 
+    // listar todos - GET
     public List<Medico> listarTodos() {
         return medicoRepository.findAll();
     }
 
-    public Medico atualizar(Integer id, Medico medico) {
-        Optional<Medico> medOpt = medicoRepository.findById(id);
-        if (medOpt.isPresent()) {
-            Medico med = medOpt.get();
-            medico.setId(med.getId());
-            return medicoRepository.save(medico);
-        }
-        return null;
+    // contar - GET
+    public long contar() {
+        return medicoRepository.count();
     }
 
+    // remover pelo id - DELETE
     public boolean removerPorId(Integer id) {
-        Medico med = medicoRepository.findById(id).orElse(null);
+        Medico med = medicoRepository.findById(id).get();
         if (med != null) {
             medicoRepository.deleteById(id);
             return true;
         }
         return false;
     }
+
+    // atualizar - PUT
+    public Medico atualizar(Integer id, Medico medico) {
+        Medico med = medicoRepository.findById(id).get();
+        if (medico != null) {
+            medico.setId(med.getId());
+            return medicoRepository.save(medico);
+        }
+        return null;
+    }
+
 }
